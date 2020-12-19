@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -75,6 +76,7 @@ public class MyPostActivity extends AppCompatActivity {
             ImageView img = main_ly.findViewById(R.id.post_pic);
             final LinearLayout up_vote = main_ly.findViewById(R.id.up_vote);
             TextView status = main_ly.findViewById(R.id.status);
+            Spinner spinner = main_ly.findViewById(R.id.spinner);
             Button msg_board = main_ly.findViewById(R.id.chat_board);
             LinearLayout vote_ly = up_vote.findViewById(R.id.vote_ly);
             TextView vote_count = vote_ly.findViewById(R.id.post_count);
@@ -86,6 +88,10 @@ public class MyPostActivity extends AppCompatActivity {
             date_time.setText(GlobalData.my_posts.get(i).getDate());
             vote_count.setText(""+GlobalData.my_posts.get(i).getUpVoteCount());
             status.setText(GlobalData.my_posts.get(i).getStatus());
+
+
+            spinner.setVisibility(View.GONE);
+            status.setVisibility(View.VISIBLE);
 
             up_vote.setOnClickListener(new View.OnClickListener() {
                 @Override

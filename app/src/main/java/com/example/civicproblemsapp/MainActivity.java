@@ -79,7 +79,9 @@ public class MainActivity extends AppCompatActivity {
 
                 valid_cred = false;
 
-                UserDetails ud = new UserDetails("", email_id_str, "", pass_str);
+                boolean is_admin = findViewById(R.id.admin).isSelected();
+
+                UserDetails ud = new UserDetails("", email_id_str, "", pass_str, is_admin);
 
                 //Call<UserDetails> login_user = GlobalData.userApi.getUserAuth(ud);
                 Call<UserDetails> login_user = GlobalData.userApi.getUserAuth(email_id_str, pass_str);

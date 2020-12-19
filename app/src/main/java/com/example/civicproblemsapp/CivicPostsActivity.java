@@ -9,11 +9,14 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +38,8 @@ public class CivicPostsActivity extends AppCompatActivity {
     ProgressDialog dialog;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+    ArrayAdapter<CharSequence> sadapter;
+    String[] statusarray = {"open", "published", "resolved","no action taken"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +56,14 @@ public class CivicPostsActivity extends AppCompatActivity {
         add_post = findViewById(R.id.add_post);
         your_post = findViewById(R.id.your_post);
         log_out = findViewById(R.id.log_out);
-        
+
+        if (GlobalData.user.admin) {
+
+            LinearLayout tb = findViewById(R.id.tool_bar);                              //admin can't add posts
+            tb.findViewById(R.id.your_post).setVisibility(View.GONE);
+            tb.findViewById(R.id.add_post).setVisibility(View.GONE);
+
+        }
 
         sharedPreferences = getSharedPreferences(GlobalData.LOGS_PREFS, MODE_PRIVATE);
         editor = sharedPreferences.edit();
@@ -118,18 +130,61 @@ public class CivicPostsActivity extends AppCompatActivity {
             TextView date_time = main_ly.findViewById(R.id.date_time);
             ImageView img = main_ly.findViewById(R.id.post_pic);
             final LinearLayout up_vote = main_ly.findViewById(R.id.up_vote);
-            TextView status = main_ly.findViewById(R.id.status);
+            TextView status_text = main_ly.findViewById(R.id.status);
+            Spinner status = main_ly.findViewById(R.id.spinner);
             Button msg_board = main_ly.findViewById(R.id.chat_board);
-            LinearLayout vote_ly = up_vote.findViewById(R.id.vote_ly);
+            final LinearLayout vote_ly = up_vote.findViewById(R.id.vote_ly);
             TextView vote_count = vote_ly.findViewById(R.id.post_count);
+
+            final int item = i;
+            final Posts post = GlobalData.posts.get(item);
+            Log.d(TAG, "show_temps: " + post.get_id());
+
+            if (GlobalData.user.admin) {
+
+                status = main_ly.findViewById(R.id.spinner);
+                sadapter = new ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_item, statusarray);
+                sadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                status.setAdapter(sadapter);
+                status.setSelection(sadapter.getPosition(GlobalData.posts.get(i).getStatus()));
+                status.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                        String status = (String) adapterView.getItemAtPosition(i);
+
+                        post.setStatus(status);
+                        Call<Posts> update = GlobalData.postApi.update_post(post);
+                        update.enqueue(new Callback<Posts>() {
+                            @Override
+                            public void onResponse(Call<Posts> call, Response<Posts> response) {
+                                Log.d(TAG, "onResponse: " + response.body());
+                                Toast.makeText(CivicPostsActivity.this, "Voted for this post", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onFailure(Call<Posts> call, Throwable t) {
+                                Log.d(TAG, "onFailure: ");
+                            }
+                        });
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
+            } else {
+                status.setVisibility(View.GONE);
+                status_text.setVisibility(View.VISIBLE);
+            }
+
 
             user_name.setText(GlobalData.posts.get(i).getUser());
             date_time.setText(GlobalData.posts.get(i).getDate());
             vote_count.setText(""+GlobalData.posts.get(i).getUpVoteCount());
-            status.setText(GlobalData.posts.get(i).getStatus());
-            final int item = i;
-            final Posts post = GlobalData.posts.get(item);
-            Log.d(TAG, "show_temps: " + post.get_id());
+            status_text.setText(GlobalData.posts.get(i).getStatus());
 
             up_vote.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -137,6 +192,8 @@ public class CivicPostsActivity extends AppCompatActivity {
                     ImageView up = up_vote.findViewById(R.id.img_up);
                     up.setImageDrawable(getResources().getDrawable(R.drawable.up_voted));
                     post.setUpVoteCount(post.getUpVoteCount()+1);
+                    TextView tv = vote_ly.findViewById(R.id.post_count);
+                    tv.setText(""+GlobalData.posts.get(i).getUpVoteCount());
                     Call<Posts> update = GlobalData.postApi.update_post(post);
                     update.enqueue(new Callback<Posts>() {
                         @Override

@@ -123,13 +123,13 @@
         <Button
             android:id="@+id/chat_board"
             android:layout_gravity="center"
-            android:layout_marginLeft="15dp"
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:text="Chat Board"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:textColor="@color/black"
+            android:textAllCaps="false"
             android:textSize="12sp"/>
     </LinearLayout>
     </LinearLayout>

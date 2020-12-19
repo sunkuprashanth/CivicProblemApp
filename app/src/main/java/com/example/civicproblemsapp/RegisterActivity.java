@@ -47,10 +47,11 @@ public class RegisterActivity extends AppCompatActivity {
                 email_id_str = email_id.getText().toString();
                 pass_str = pass.getText().toString();
                 c_pass_str = c_pass.getText().toString();
+                boolean is_admin = false;
 
                 if (c_pass_str.equals(pass_str)) {
 
-                    UserDetails ud = new UserDetails(name_str, email_id_str, mobile_str, pass_str);
+                    UserDetails ud = new UserDetails(name_str, email_id_str, mobile_str, pass_str, is_admin);
                     Call<UserDetails> new_user = GlobalData.userApi.insertUser(ud);
                     new_user.enqueue(new Callback<UserDetails>() {
                         @Override
