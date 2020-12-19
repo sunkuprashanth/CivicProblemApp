@@ -49,8 +49,10 @@ public class MainActivity extends AppCompatActivity {
         logged = sharedPreferences.getBoolean("logged", false);
 
         if(logged) {
+
             Intent logged_in = new Intent(MainActivity.this, CivicPostsActivity.class);
             startActivity(logged_in);
+
             Call<UserDetails> get_user = GlobalData.userApi.getUser(sharedPreferences.getString("id", ""));
             get_user.enqueue(new Callback<UserDetails>() {
                 @Override
@@ -64,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG, "onFailure: ");
                 }
             });
+
         }
 
 

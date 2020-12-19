@@ -2,15 +2,33 @@ package com.example.civicproblemsapp;
 
 public class Posts {
 
+    private Object _id;
     private String id;
+    private String user;
     private String date;
+    private String location;
     private String img_url;
     private int upVoteCount;
     private String status;
+    private String messageBoard;
 
-    public Posts(String id, String date, String img_url, int upVoteCount, String status, String messageBoard) {
-        this.id = id;
+    public Object get_id() {
+        return _id;
+    }
+
+    public void set_id(Object __id) {
+        this._id = __id;
+    }
+
+    public Posts(){
+
+    }
+
+    public Posts(String user, String date, String location, String img_url, int upVoteCount, String status, String messageBoard) {
+        this.id = "";
+        this.user = user;
         this.date = date;
+        this.location = location;
         this.img_url = img_url;
         this.upVoteCount = upVoteCount;
         this.status = status;
@@ -23,6 +41,23 @@ public class Posts {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
 
     public String getDate() {
@@ -64,8 +99,5 @@ public class Posts {
     public void setMessageBoard(String messageBoard) {
         this.messageBoard = messageBoard;
     }
-
-    private String messageBoard;
-
 
 }
