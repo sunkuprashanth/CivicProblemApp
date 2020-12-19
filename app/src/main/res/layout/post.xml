@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    android:elevation="10dp"
+    app:cardCornerRadius="10dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="User Name"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:paddingLeft="15dp"
+        android:layout_marginBottom="10dp"/>
+
+    <TextView
+        android:id="@+id/date_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date and time of post"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        android:paddingLeft="15dp"
+        android:layout_marginBottom="5dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:background="@color/black"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp">
+        <ImageView
+            android:id="@+id/post_pic"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@mipmap/ic_launcher"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center">
+    <LinearLayout
+        android:id="@+id/up_vote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:background="@color/black"
+        android:padding="2dp">
+        <ImageView
+            android:id="@+id/img_up"
+            android:layout_width="45dp"
+            android:background="@color/white"
+            android:layout_height="45dp"
+            android:src="@drawable/up_vote"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center|top">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="up vote"
+                android:textSize="12sp"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+    </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_marginLeft="15dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Status :  "
+                android:textSize="12sp"
+                android:textColor="@color/black"/>
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Status of post"
+                android:textSize="12sp"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+        <Button
+            android:id="@+id/chat_board"
+            android:layout_gravity="center"
+            android:layout_marginLeft="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chat Board"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:textColor="@color/black"
+            android:textSize="12sp"/>
+    </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
+</LinearLayout>

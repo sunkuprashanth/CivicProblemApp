@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:gravity="bottom|center_horizontal"
+            android:orientation="vertical"
+            android:layout_marginBottom="30dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Civic Problems"
+                android:layout_marginTop="20dp"
+                android:textSize="30sp"
+                android:textColor="@color/black"
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:gravity="top|center_horizontal"
+            android:layout_weight="1.8"
+            android:layout_margin="40dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_vertical">
+                <EditText
+                    android:id="@+id/email_id"
+                    android:lines="1"
+                    android:layout_width="match_parent"
+                    android:hint="Enter Email Id"
+                    android:textColor="@color/black"
+                    android:layout_height="40dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:layout_marginTop="20dp">
+                <EditText
+                    android:id="@+id/pass"
+                    android:layout_width="match_parent"
+                    android:inputType="textPassword"
+                    android:textColor="@color/black"
+                    android:layout_height="40dp"
+                    android:hint="Enter Password"/>
+            </LinearLayout>
+            <Button
+                android:id="@+id/login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="login"
+                android:layout_margin="20dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="New User ?"
+                    android:textColor="@color/black"/>
+                <TextView
+                    android:id="@+id/goto_register_link"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="   Register Here"
+                    android:textColor="@color/blue"
+                    android:clickable="true"
+                    android:enabled="true"/>
+            </LinearLayout>
+        </LinearLayout>
+
+</LinearLayout>
