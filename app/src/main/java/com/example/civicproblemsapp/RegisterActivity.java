@@ -6,13 +6,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class RegisterActivity extends AppCompatActivity {
 
+    private static final String TAG = "RegisterActivity";
     EditText name, mobile, email_id, pass, c_pass;
     String name_str, mobile_str, email_id_str, pass_str, c_pass_str;
     Button sign_up;
@@ -42,15 +50,34 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if (c_pass_str.equals(pass_str)) {
 
-                    Toast.makeText(RegisterActivity.this, "Registration Success", Toast.LENGTH_SHORT).show();
+                    UserDetails ud = new UserDetails(name_str, email_id_str, mobile_str, pass_str);
+                    Call<UserDetails> new_user = GlobalData.userApi.insertUser(ud);
+                    new_user.enqueue(new Callback<UserDetails>() {
+                        @Override
+                        public void onResponse(Call<UserDetails> call, Response<UserDetails> response) {
+                            Log.d(TAG, "onResponse: " + response.code() + "\nbody: " + response.body());
 
-                    sharedPreferences = getSharedPreferences(GlobalData.LOGS_PREFS, Context.MODE_PRIVATE);
-                    editor = sharedPreferences.edit();
-                    editor.putBoolean("logged",true);
-                    editor.commit();
+                            UserDetails ud = response.body();
+                            if(ud!=null) {
+                                Toast.makeText(RegisterActivity.this, "Registration Success", Toast.LENGTH_SHORT).show();
+                                GlobalData.user = ud;
 
-                    Intent logged_in = new Intent(RegisterActivity.this, CivicPostsActivity.class);
-                    startActivity(logged_in);
+                                sharedPreferences = getSharedPreferences(GlobalData.LOGS_PREFS, Context.MODE_PRIVATE);
+                                editor = sharedPreferences.edit();
+                                editor.putBoolean("logged", true);
+                                editor.commit();
+
+                                Intent logged_in = new Intent(RegisterActivity.this, CivicPostsActivity.class);
+                                startActivity(logged_in);
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<UserDetails> call, Throwable t) {
+                            Log.d(TAG, "onFailure: ");
+                            Toast.makeText(RegisterActivity.this, "Registration Failed", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             }
         });

@@ -1,6 +1,7 @@
 package com.example.civicproblemsapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,11 +11,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -27,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     TextView register;
     String email_id_str, pass_str;
     boolean logged = true;
+    boolean valid_cred = false;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
@@ -47,7 +51,22 @@ public class MainActivity extends AppCompatActivity {
         if(logged) {
             Intent logged_in = new Intent(MainActivity.this, CivicPostsActivity.class);
             startActivity(logged_in);
+            Call<UserDetails> get_user = GlobalData.userApi.getUser(sharedPreferences.getString("id", ""));
+            get_user.enqueue(new Callback<UserDetails>() {
+                @Override
+                public void onResponse(Call<UserDetails> call, Response<UserDetails> response) {
+                    Log.d(TAG, "onResponse: " + response);
+                    GlobalData.user = response.body();
+                }
+
+                @Override
+                public void onFailure(Call<UserDetails> call, Throwable t) {
+                    Log.d(TAG, "onFailure: ");
+                }
+            });
         }
+
+
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,13 +74,30 @@ public class MainActivity extends AppCompatActivity {
                 email_id_str = email_id.getText().toString();
                 pass_str = pass.getText().toString();
 
-                boolean valid_cred = false;
+                valid_cred = false;
 
-                Call<UserDetails> login_user = GlobalData.userApi.getUserAuth(email_id_str,pass_str);
+                UserDetails ud = new UserDetails("", email_id_str, "", pass_str);
+
+                //Call<UserDetails> login_user = GlobalData.userApi.getUserAuth(ud);
+                Call<UserDetails> login_user = GlobalData.userApi.getUserAuth(email_id_str, pass_str);
                 login_user.enqueue(new Callback<UserDetails>() {
                     @Override
                     public void onResponse(Call<UserDetails> call, Response<UserDetails> response) {
-                        Log.d(TAG, "onResponse: " + response.code() + "\nbody: " + response.body());
+                        UserDetails ud = response.body();
+                        if (ud!=null) {
+                            valid_cred = true;
+                            GlobalData.user = ud;
+                        }
+                        if (valid_cred) {
+                            Toast.makeText(MainActivity.this, "Login Successfull", Toast.LENGTH_SHORT).show();
+                            editor.putBoolean("logged",true);
+                            editor.putString("id",ud.getEmailId());
+                            editor.commit();
+                            Intent logged_in = new Intent(MainActivity.this, CivicPostsActivity.class);
+                            startActivity(logged_in);
+                        }
+                        else
+                            Toast.makeText(MainActivity.this, "Incorrect Credentials", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -69,17 +105,6 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
-
-
-                if (valid_cred) {
-
-                    editor.putBoolean("logged",true);
-                    editor.commit();
-                    Intent logged_in = new Intent(MainActivity.this, CivicPostsActivity.class);
-                    startActivity(logged_in);
-                }
-                else
-                    Toast.makeText(MainActivity.this, "Incorrect Credentials", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -91,7 +116,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
 }
+
 
 /*Retrofit retrofit = new Retrofit.Builder().baseUrl("https://trial8.herokuapp.com/")
                 .addConverterFactory(GsonConverterFactory.create()).build();

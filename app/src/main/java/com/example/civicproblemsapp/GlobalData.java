@@ -5,6 +5,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class GlobalData {
 
+    public static UserDetails user = new UserDetails();
+
     public static String LOGS_PREFS = "logged_file";
 
     public static Retrofit retrofit = new Retrofit.Builder().baseUrl("https://trial8.herokuapp.com/")

@@ -7,6 +7,18 @@ public class UserDetails {
     public String mobile;
     public String password;
 
+
+    public UserDetails() {
+
+    }
+
+    public UserDetails(String name, String emailId, String mobile, String password) {
+        this.name = name;
+        this.emailId = emailId;
+        this.mobile = mobile;
+        this.password = password;
+    }
+
     public String getName() {
         return name;
     }
