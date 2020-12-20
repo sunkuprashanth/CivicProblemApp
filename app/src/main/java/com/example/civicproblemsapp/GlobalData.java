@@ -12,6 +12,7 @@ public class GlobalData {
 
     public static List<Posts> posts = new ArrayList<Posts>();
     public static List<Posts> my_posts = new ArrayList<Posts>();
+    public static List<Chats> chats = new ArrayList<Chats>();
 
     public static String LOGS_PREFS = "logged_file";
 
@@ -20,5 +21,6 @@ public class GlobalData {
 
     public static UserApi userApi = retrofit.create(UserApi.class);
     public static PostApi postApi = retrofit.create(PostApi.class);
+    public static ChatsApi chatsApi = retrofit.create(ChatsApi.class);
 
 }

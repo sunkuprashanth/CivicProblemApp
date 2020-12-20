@@ -30,12 +30,14 @@ public class MyPostActivity extends AppCompatActivity {
     LinearLayout post_ly;
     SharedPreferences sharedPreferences;
     String userId;
+    TextView no_post;
     ProgressDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_post);
 
+        no_post = findViewById(R.id.no_post);
 
         dialog =  new ProgressDialog(MyPostActivity.this);
         dialog.setTitle("Loading");
@@ -59,7 +61,13 @@ public class MyPostActivity extends AppCompatActivity {
                 Log.d(TAG, "onResponse: "+response.body());
                 if(response.body()!=null) {
                     GlobalData.my_posts = response.body();
-                    show_temps();
+
+                    if (GlobalData.my_posts.size()==0) {
+                        no_post.setVisibility(View.VISIBLE);
+                        dialog.dismiss();
+                    }
+                    else
+                        show_temps();
                 }
             }
 
@@ -108,7 +116,7 @@ public class MyPostActivity extends AppCompatActivity {
                     Toast.makeText(MyPostActivity.this, "Editing", Toast.LENGTH_SHORT).show();
 
                     Intent edit = new Intent(MyPostActivity.this, EditPostActivity.class);
-                    edit.putExtra("board_id",post.get_id().toString());
+                    edit.putExtra("_id",post.get_id().toString());
                     startActivity(edit);
                 }
             });
@@ -126,8 +134,9 @@ public class MyPostActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     Intent msg = new Intent(MyPostActivity.this, MessageBoardActivity.class);
-                    msg.putExtra("board_id",post.getMessageBoard());
-                    startActivity(msg);                }
+                    msg.putExtra("board_id",post.get_id().toString());
+                    startActivity(msg);
+                }
             });
 
             post_ly.addView(main_ly);

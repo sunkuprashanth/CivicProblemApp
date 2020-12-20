@@ -98,6 +98,8 @@ public class EditPostActivity extends AppCompatActivity {
                         if (response.code()==200) {
                             Log.d(TAG, "onResponse: Deleted");
                             Toast.makeText(EditPostActivity.this, "Post Deleted Successfully", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(EditPostActivity.this, CivicPostsActivity.class));
+
                         }
                     }
 

@@ -32,8 +32,6 @@
                 android:orientation="vertical"
                 android:layout_marginBottom="20dp"
                 android:gravity="center_horizontal|bottom">
-                <include layout="@layout/chat_out"/>
-                <include layout="@layout/chat_in"/>
             </LinearLayout>
         </ScrollView>
         <androidx.cardview.widget.CardView
@@ -51,6 +49,7 @@
                 android:gravity="center"
                 android:background="@color/light_grey">
                 <EditText
+                    android:id="@+id/msg"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -60,6 +59,7 @@
                     android:background="@null"
                     android:layout_margin="5dp"/>
                 <Button
+                    android:id="@+id/send"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.14"

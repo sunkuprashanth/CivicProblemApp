@@ -224,7 +224,7 @@ public class CivicPostsActivity extends AppCompatActivity {
                 public void onClick(View view) {
 
                     Intent msg = new Intent(CivicPostsActivity.this, MessageBoardActivity.class);
-                    msg.putExtra("board_id",post.getMessageBoard());
+                    msg.putExtra("board_id",post.get_id().toString());
                     startActivity(msg);
                 }
             });

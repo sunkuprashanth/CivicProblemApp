@@ -12,13 +12,25 @@
         android:layout_height="match_parent">
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:id="@+id/post_ly"
+                android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
+                <TextView
+                    android:layout_marginTop="300dp"
+                    android:gravity="center"
+                    android:id="@+id/no_post"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="No Posts To be Shown"/>
 
             </LinearLayout>
         </ScrollView>
