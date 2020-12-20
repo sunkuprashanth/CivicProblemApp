@@ -9,18 +9,17 @@
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
     android:gravity="center"
-    android:background="@color/light_grey">
+    android:background="@drawable/gradient">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:paddingTop="10dp">
+        android:layout_marginLeft="15dp">
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profilePic"
-            android:layout_height="40dp"
+            android:layout_height="35dp"
             android:layout_width="40dp"
-            android:layout_gravity="start"
             app:civ_border_width="1dp"
             app:civ_border_color="#000000"
             android:src="@mipmap/profile_pic"/>
@@ -34,13 +33,35 @@
             android:layout_width="wrap_content"
             android:gravity="right"
             android:layout_height="wrap_content"
-            android:elevation="5dp"
-            android:background="@color/grey"
+            android:elevation="15dp"
+            app:cardCornerRadius="5dp">
+            <Button
+                android:id="@+id/add_post"
+                android:layout_width="33dp"
+                android:layout_height="33dp"
+                android:gravity="center"
+                android:textSize="25sp"
+                android:background="@drawable/ic_baseline_arrow_upward_24"
+                android:textColor="@color/black"
+                android:layout_gravity="center_horizontal"
+                android:clickable="true"/>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:gravity="right">
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:gravity="right"
+            android:layout_height="wrap_content"
+            android:elevation="15dp"
             app:cardCornerRadius="5dp">
             <Button
                 android:id="@+id/your_post"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:background="@drawable/your_post"
                 android:gravity="center"
                 android:textSize="20sp"
@@ -49,36 +70,12 @@
                 android:clickable="true"/>
         </androidx.cardview.widget.CardView>
     </LinearLayout>
-   <LinearLayout
-       android:layout_width="0dp"
-       android:layout_weight="1"
-       android:layout_height="wrap_content"
-       android:gravity="right">
-       <androidx.cardview.widget.CardView
-           android:layout_width="wrap_content"
-           android:gravity="right"
-           android:layout_height="wrap_content"
-           android:elevation="5dp"
-           android:background="@color/grey"
-           app:cardCornerRadius="5dp">
-           <Button
-               android:id="@+id/add_post"
-               android:layout_width="50dp"
-               android:layout_height="wrap_content"
-               android:text="+"
-               android:gravity="center"
-               android:textSize="25sp"
-               android:background="@color/white"
-               android:textColor="@color/black"
-               android:layout_gravity="center_horizontal"
-               android:clickable="true"/>
-       </androidx.cardview.widget.CardView>
-   </LinearLayout>
     <LinearLayout
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:gravity="right|center">
+        android:gravity="right|center"
+        android:visibility="gone">
         <Button
             android:id="@+id/log_out"
             android:layout_width="wrap_content"

@@ -34,7 +34,7 @@
                     android:layout_height="40dp"
                     android:hint="Enter Date"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_med"/>
+                    android:textSize="14sp"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -48,7 +48,7 @@
                     android:lines="1"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:textSize="@dimen/text_size_med"
+                    android:textSize="14sp"
                     android:textColor="@color/black"
                     android:hint="Enter Location"/>
             </LinearLayout>

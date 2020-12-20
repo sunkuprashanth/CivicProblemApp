@@ -26,6 +26,8 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -51,6 +53,11 @@ public class AddPostActivity extends AppCompatActivity {
         post = findViewById(R.id.post);
         img = findViewById(R.id.img);
         choose_file = findViewById(R.id.choose);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd     HH:mm:ss");
+        Date date_d = new Date();
+        date.setText(dateFormat.format(date_d));
+        date.setFocusable(false);
 
 
         choose_file.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +93,9 @@ public class AddPostActivity extends AppCompatActivity {
     public void upload_mongo(Uri url) {
         Posts posts = new Posts(GlobalData.user.getEmailId(),date.getText().toString(),location.getText().toString(),
                 url.toString(),1, "open", "iddd");
+
+        posts.getLiked().add(GlobalData.user.getEmailId());
+        Log.d(TAG, "upload_mongo: " + posts.getLiked().toString());
 
         Call<Posts> ins_post = GlobalData.postApi.insert_post(posts);
         ins_post.enqueue(new Callback<Posts>() {

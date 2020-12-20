@@ -94,6 +94,9 @@ public class MyPostActivity extends AppCompatActivity {
             TextView vote_count = vote_ly.findViewById(R.id.post_count);
             Button edit = main_ly.findViewById(R.id.edit);
 
+            TextView location = main_ly.findViewById(R.id.loc);
+            location.setText(GlobalData.posts.get(i).getLocation());
+
             edit.setVisibility(View.VISIBLE);
 
             ImageView up = up_vote.findViewById(R.id.img_up);

@@ -27,6 +27,7 @@ public class MessageBoardActivity extends AppCompatActivity {
     Button send;
     String board_id;
     ScrollView scroll;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +51,12 @@ public class MessageBoardActivity extends AppCompatActivity {
         });
 
         add_prev_chats();
+        scroll.post(new Runnable() {
+            @Override
+            public void run() {
+                scroll.fullScroll(View.FOCUS_DOWN);
+            }
+        });
     }
 
     public void add_new_chats() {

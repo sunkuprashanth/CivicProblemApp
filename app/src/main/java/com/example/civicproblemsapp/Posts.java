@@ -1,5 +1,8 @@
 package com.example.civicproblemsapp;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Posts {
 
     private Object _id;
@@ -11,6 +14,15 @@ public class Posts {
     private int upVoteCount;
     private String status;
     private String messageBoard;
+    private List<String> liked = new ArrayList<>();
+
+    public List<String> getLiked() {
+        return liked;
+    }
+
+    public void setLiked(List<String> liked) {
+        this.liked = liked;
+    }
 
     public Object get_id() {
         return _id;

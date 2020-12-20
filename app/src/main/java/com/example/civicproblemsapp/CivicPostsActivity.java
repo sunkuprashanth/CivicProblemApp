@@ -43,6 +43,7 @@ public class CivicPostsActivity extends AppCompatActivity {
     SharedPreferences.Editor editor;
     ArrayAdapter<CharSequence> sadapter;
     String[] statusarray = {"open", "published", "resolved","no action taken"};
+    TextView location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,7 @@ public class CivicPostsActivity extends AppCompatActivity {
         add_post = findViewById(R.id.add_post);
         your_post = findViewById(R.id.your_post);
         log_out = findViewById(R.id.log_out);
+        location = findViewById(R.id.loc);
 
         if (GlobalData.user.admin) {
 
@@ -118,6 +120,7 @@ public class CivicPostsActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Posts>> call, Throwable t) {
+                Log.d(TAG, "onFailure: " + t.getMessage());
 
             }
         });
@@ -138,11 +141,24 @@ public class CivicPostsActivity extends AppCompatActivity {
             final LinearLayout vote_ly = up_vote.findViewById(R.id.vote_ly);
             TextView vote_count = vote_ly.findViewById(R.id.post_count);
 
+            TextView location = main_ly.findViewById(R.id.loc);
+            location.setText(GlobalData.posts.get(i).getLocation());
+
             final int item = i;
             final Posts post = GlobalData.posts.get(item);
             Log.d(TAG, "show_temps: " + post.get_id());
 
             Picasso.get().load(Uri.parse(post.getImg_url())).into(img);
+
+            for (String id : post.getLiked()) {
+                if (id.equals(GlobalData.user.getEmailId())){
+                    Log.d(TAG, "onClick: " + id.equals(GlobalData.user.getEmailId()));
+                    ImageView up = up_vote.findViewById(R.id.img_up);
+                    up.setImageDrawable(getResources().getDrawable(R.drawable.up_voted));
+                    break;
+                }
+            }
+
 
             if (GlobalData.user.admin) {
 
@@ -188,7 +204,6 @@ public class CivicPostsActivity extends AppCompatActivity {
                 status_text.setVisibility(View.VISIBLE);
             }
 
-
             user_name.setText(GlobalData.posts.get(i).getUser());
             date_time.setText(GlobalData.posts.get(i).getDate());
             vote_count.setText(""+GlobalData.posts.get(i).getUpVoteCount());
@@ -197,6 +212,17 @@ public class CivicPostsActivity extends AppCompatActivity {
             up_vote.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    for (String id : post.getLiked()) {
+                        if (id.equals(GlobalData.user.getEmailId())){
+                            Log.d(TAG, "onClick: " + id.equals(GlobalData.user.getEmailId()));
+                            Toast.makeText(CivicPostsActivity.this, "Already Voted", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
+
+                    post.getLiked().add(GlobalData.user.emailId);
+
                     ImageView up = up_vote.findViewById(R.id.img_up);
                     up.setImageDrawable(getResources().getDrawable(R.drawable.up_voted));
                     post.setUpVoteCount(post.getUpVoteCount()+1);
