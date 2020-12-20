@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1145701448",
+    "project_id": "civicproblems-dca2d",
+    "storage_bucket": "civicproblems-dca2d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1145701448:android:b0749919717a82ef1cc47d",
+        "android_client_info": {
+          "package_name": "com.example.civicproblemsapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1145701448-4irqhqdkuhehv2t1piobuttpt5j71h3o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.civicproblemsapp",
+            "certificate_hash": "d5863bc689cfc3e9ad9a6bbc1290315a0074358c"
+          }
+        },
+        {
+          "client_id": "1145701448-3db98c9nr56bk1tjdigc3if918ms2sfr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANRZ9yOOTG9v0tZKFBvQXYwcWfuLvgIjc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1145701448-3db98c9nr56bk1tjdigc3if918ms2sfr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -3,7 +3,9 @@ package com.example.civicproblemsapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -80,6 +84,9 @@ public class MyPostActivity extends AppCompatActivity {
             Button msg_board = main_ly.findViewById(R.id.chat_board);
             LinearLayout vote_ly = up_vote.findViewById(R.id.vote_ly);
             TextView vote_count = vote_ly.findViewById(R.id.post_count);
+            Button edit = main_ly.findViewById(R.id.edit);
+
+            edit.setVisibility(View.VISIBLE);
 
             ImageView up = up_vote.findViewById(R.id.img_up);
             up.setImageDrawable(getResources().getDrawable(R.drawable.up_voted));
@@ -89,9 +96,22 @@ public class MyPostActivity extends AppCompatActivity {
             vote_count.setText(""+GlobalData.my_posts.get(i).getUpVoteCount());
             status.setText(GlobalData.my_posts.get(i).getStatus());
 
+            final Posts post = GlobalData.my_posts.get(i);
+            Picasso.get().load(Uri.parse(post.getImg_url())).into(img);
 
             spinner.setVisibility(View.GONE);
             status.setVisibility(View.VISIBLE);
+
+            edit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(MyPostActivity.this, "Editing", Toast.LENGTH_SHORT).show();
+
+                    Intent edit = new Intent(MyPostActivity.this, EditPostActivity.class);
+                    edit.putExtra("board_id",post.get_id().toString());
+                    startActivity(edit);
+                }
+            });
 
             up_vote.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -105,8 +125,9 @@ public class MyPostActivity extends AppCompatActivity {
             msg_board.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(MyPostActivity.this, "Messaging not implemented Yet", Toast.LENGTH_SHORT).show();
-                }
+                    Intent msg = new Intent(MyPostActivity.this, MessageBoardActivity.class);
+                    msg.putExtra("board_id",post.getMessageBoard());
+                    startActivity(msg);                }
             });
 
             post_ly.addView(main_ly);

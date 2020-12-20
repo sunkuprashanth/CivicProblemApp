@@ -9,4 +9,7 @@
     <color name="grey">#808080</color>
     <color name="light_grey">#d9d9d9</color>
     <color name="blue">#6200EE</color>
+
+    <color name="chat_in">#C1E4FF</color>
+    <color name="chat_out">#227FC2</color>
 </resources>

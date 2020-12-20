@@ -6,6 +6,7 @@ import androidx.cardview.widget.CardView;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,6 +20,8 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -100,7 +103,6 @@ public class CivicPostsActivity extends AppCompatActivity {
             }
         });
 
-
         getPosts();
     }
 
@@ -140,13 +142,19 @@ public class CivicPostsActivity extends AppCompatActivity {
             final Posts post = GlobalData.posts.get(item);
             Log.d(TAG, "show_temps: " + post.get_id());
 
+            Picasso.get().load(Uri.parse(post.getImg_url())).into(img);
+
             if (GlobalData.user.admin) {
+
+                LinearLayout tb = findViewById(R.id.tool_bar);                              //admin can't add posts
+                tb.findViewById(R.id.your_post).setVisibility(View.GONE);
+                tb.findViewById(R.id.add_post).setVisibility(View.GONE);
 
                 status = main_ly.findViewById(R.id.spinner);
                 sadapter = new ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_item, statusarray);
                 sadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 status.setAdapter(sadapter);
-                status.setSelection(sadapter.getPosition(GlobalData.posts.get(i).getStatus()));
+                status.setSelection(sadapter.getPosition(post.getStatus()));
                 status.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -159,7 +167,7 @@ public class CivicPostsActivity extends AppCompatActivity {
                             @Override
                             public void onResponse(Call<Posts> call, Response<Posts> response) {
                                 Log.d(TAG, "onResponse: " + response.body());
-                                Toast.makeText(CivicPostsActivity.this, "Voted for this post", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(CivicPostsActivity.this, "Status Updated", Toast.LENGTH_SHORT).show();
                             }
 
                             @Override
@@ -193,7 +201,7 @@ public class CivicPostsActivity extends AppCompatActivity {
                     up.setImageDrawable(getResources().getDrawable(R.drawable.up_voted));
                     post.setUpVoteCount(post.getUpVoteCount()+1);
                     TextView tv = vote_ly.findViewById(R.id.post_count);
-                    tv.setText(""+GlobalData.posts.get(i).getUpVoteCount());
+                    tv.setText(""+post.getUpVoteCount());
                     Call<Posts> update = GlobalData.postApi.update_post(post);
                     update.enqueue(new Callback<Posts>() {
                         @Override
@@ -214,7 +222,10 @@ public class CivicPostsActivity extends AppCompatActivity {
             msg_board.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(CivicPostsActivity.this, "Messaging not implemented Yet", Toast.LENGTH_SHORT).show();
+
+                    Intent msg = new Intent(CivicPostsActivity.this, MessageBoardActivity.class);
+                    msg.putExtra("board_id",post.getMessageBoard());
+                    startActivity(msg);
                 }
             });
 
