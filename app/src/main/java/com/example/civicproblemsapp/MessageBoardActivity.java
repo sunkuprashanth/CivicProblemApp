@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +26,7 @@ public class MessageBoardActivity extends AppCompatActivity {
     EditText msg;
     Button send;
     String board_id;
+    ScrollView scroll;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +35,7 @@ public class MessageBoardActivity extends AppCompatActivity {
         chat_space = findViewById(R.id.chat_space);
         msg = findViewById(R.id.msg);
         send = findViewById(R.id.send);
+        scroll = findViewById(R.id.scroll);
 
         Intent id = getIntent();
         board_id = id.getExtras().getString("board_id");
@@ -55,6 +58,9 @@ public class MessageBoardActivity extends AppCompatActivity {
         Chats new_chat = new Chats(board_id, message, GlobalData.user.getEmailId(),System.currentTimeMillis());
         msg.setText("");
 
+        if (message.equals(""))
+            return;
+
         Call<Chats> ins_chat = GlobalData.chatsApi.chat_insert(new_chat);
         ins_chat.enqueue(new Callback<Chats>() {
             @Override
@@ -67,6 +73,8 @@ public class MessageBoardActivity extends AppCompatActivity {
                     TextView text_msg = chat.findViewById(R.id.text_msg);
                     text_msg.setText(message);
                     chat_space.addView(chat);
+                    scroll_down(new View(MessageBoardActivity.this));
+
                 }
             }
 
@@ -98,8 +106,9 @@ public class MessageBoardActivity extends AppCompatActivity {
                         TextView text_msg = chat.findViewById(R.id.text_msg);
                         text_msg.setText(GlobalData.chats.get(i).getMessage());
                         chat_space.addView(chat);
-                    }
 
+                        scroll_down(new View(MessageBoardActivity.this));
+                    }
                 }
             }
 
@@ -109,5 +118,8 @@ public class MessageBoardActivity extends AppCompatActivity {
             }
         });
 
+    }
+    public void scroll_down(View v) {
+        scroll.fullScroll(View.FOCUS_DOWN);
     }
 }
